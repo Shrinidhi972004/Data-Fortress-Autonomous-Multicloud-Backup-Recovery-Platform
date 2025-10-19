@@ -1,0 +1,14 @@
+Sample Document for Testing
+===========================
+
+This is a test document created for backup and recovery testing.
+Created on: Wed Oct 15 04:55:09 PM IST 2025
+
+File Upload Application Test Data
+- Backend: Node.js + Express + MongoDB
+- Frontend: React
+- Storage: Local filesystem
+- Purpose: Data Fortress workload testing
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.

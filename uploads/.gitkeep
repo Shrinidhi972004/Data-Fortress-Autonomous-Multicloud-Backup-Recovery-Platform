@@ -1,0 +1,5 @@
+# This directory stores uploaded files
+# It will be mounted as a volume in Docker for easy backup and recovery testing
+
+# Add a sample file to ensure the directory is tracked by git
+echo "File upload storage directory" > .gitkeep

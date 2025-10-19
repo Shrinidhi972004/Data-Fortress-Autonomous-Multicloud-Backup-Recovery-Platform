@@ -1,0 +1,21 @@
+{
+  "application": "file-upload-app",
+  "version": "1.0.0",
+  "environment": "test",
+  "database": {
+    "type": "mongodb",
+    "host": "mongo",
+    "port": 27017,
+    "name": "fileupload"
+  },
+  "features": {
+    "upload": true,
+    "download": true,
+    "delete": true,
+    "statistics": true
+  },
+  "limits": {
+    "maxFileSize": "10MB",
+    "allowedTypes": ["image", "document", "video", "audio", "archive"]
+  }
+}
