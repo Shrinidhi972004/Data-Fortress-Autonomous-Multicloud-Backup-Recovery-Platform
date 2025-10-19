@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   # MongoDB Database
   mongo:
@@ -21,7 +19,8 @@ services:
       context: ./backend
       dockerfile: Dockerfile
       target: production
-    container_name: file-upload-backend
+    image: shrinidhiupadhyaya/datafortress-backend:latest
+    container_name: datafortress-backend
     restart: unless-stopped
     environment:
       - NODE_ENV=production
@@ -52,7 +51,8 @@ services:
       target: production
       args:
         - REACT_APP_API_URL=http://localhost:5000
-    container_name: file-upload-frontend
+    image: shrinidhiupadhyaya/datafortress-frontend:latest
+    container_name: datafortress-frontend
     restart: unless-stopped
     ports:
       - "3000:80"
@@ -66,10 +66,34 @@ services:
       timeout: 10s
       retries: 3
 
+  # Backup Job (runs on demand)
+  backup:
+    image: shrinidhiupadhyaya/datafortress-backup:latest
+    container_name: datafortress-backup
+    restart: "no"
+    environment:
+      - MONGODB_URI=mongodb://mongo:27017/fileupload
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID:-}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY:-}
+      - AWS_BUCKET=datafortress-backups-shrinidhi
+      - AWS_REGION=ap-south-1
+    volumes:
+      - ./uploads:/backup/uploads:ro
+      - backup_data:/backup/mongodb
+    depends_on:
+      - mongo
+    networks:
+      - app-network
+    profiles:
+      - backup
+    command: ["/app/scripts/container_backup.sh"]
+
 volumes:
   mongodb_data:
     driver: local
   backend_node_modules:
+    driver: local
+  backup_data:
     driver: local
 
 networks:

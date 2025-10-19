@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: datafortress-frontend
+  namespace: datafortress
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: datafortress-frontend
+  template:
+    metadata:
+      labels:
+        app: datafortress-frontend
+    spec:
+      containers:
+        - name: frontend
+          image: shrinidhiupadhyaya/datafortress-frontend:latest
+          ports:
+            - containerPort: 80

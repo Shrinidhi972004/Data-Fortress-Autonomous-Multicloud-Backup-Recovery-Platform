@@ -1,0 +1,27 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: datafortress-backup
+  namespace: datafortress
+spec:
+  schedule: "0 2 * * *"   # every day at 2 AM
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: backup
+              image: shrinidhiupadhyaya/datafortress-backup:latest
+              env:
+                - name: AWS_BUCKET
+                  value: datafortress-backups-shrinidhi
+                - name: AWS_REGION
+                  value: ap-south-1
+              volumeMounts:
+                - name: uploads
+                  mountPath: /app/scripts/uploads
+          volumes:
+            - name: uploads
+              persistentVolumeClaim:
+                claimName: uploads-pvc
+          restartPolicy: OnFailure

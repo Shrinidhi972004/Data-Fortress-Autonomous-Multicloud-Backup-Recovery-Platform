@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: datafortress-backend
+  namespace: datafortress
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: datafortress-backend
+  template:
+    metadata:
+      labels:
+        app: datafortress-backend
+    spec:
+      containers:
+        - name: backend
+          image: shrinidhiupadhyaya/datafortress-backend:latest
+          ports:
+            - containerPort: 5000
+          env:
+            - name: MONGODB_URI
+              value: mongodb://mongo:27017/fileupload
+            - name: PORT
+              value: "5000"
+          volumeMounts:
+            - name: uploads
+              mountPath: /app/uploads
+      volumes:
+        - name: uploads
+          persistentVolumeClaim:
+            claimName: uploads-pvc
