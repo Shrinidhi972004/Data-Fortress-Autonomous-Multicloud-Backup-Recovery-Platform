@@ -68,3 +68,10 @@ jspm_packages/
 
 # MongoDB data (for local development)
 data/
+
+# Terraform files
+**/.terraform/
+**/.terraform.lock.hcl
+**/terraform.tfstate
+**/terraform.tfstate.backup
+**/.terraform.tfstate.lock.info
